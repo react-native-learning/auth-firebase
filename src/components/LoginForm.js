@@ -2,16 +2,17 @@ import React, { Component } from 'react';
 import { Button, CardSection, Card, Input } from './common';
 
 class FormLogin extends Component {
-    state = { text: 'ssss' }
+    state = { text: '' }
 
     render() {
         return (
             <Card>
                 <CardSection>
                     <Input
-                        label="UserName"
+                        placeholder="user@example.com"
+                        label="Email"
                         value={this.state.text}
-                        handleOnChangeText={(text) => this.setState({ text })}
+                        onChangeText={(text) => this.setState({ text })}
                     />
                 </CardSection>
 
