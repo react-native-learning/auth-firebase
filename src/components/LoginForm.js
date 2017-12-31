@@ -1,17 +1,17 @@
 import React, { Component } from 'react';
-import { View, TextInput } from 'react-native';
-import { Button, CardSection, Card } from './common';
+import { Button, CardSection, Card, Input } from './common';
 
 class FormLogin extends Component {
-    state = { text: '' }
+    state = { text: 'ssss' }
 
     render() {
         return (
             <Card>
                 <CardSection>
-                    <TextInput
-                        onChangeText={(text) => this.setState({ text })}
-                        style={{ height: 40, flex: 1 }}
+                    <Input
+                        label="UserName"
+                        value={this.state.text}
+                        handleOnChangeText={(text) => this.setState({ text })}
                     />
                 </CardSection>
 
