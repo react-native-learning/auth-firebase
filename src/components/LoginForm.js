@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Button, CardSection, Card, Input } from './common';
+import { Button, CardSection, Card, Input, Spinner } from './common';
 import { firebase } from '@firebase/app';
 import { Text } from 'react-native';
 
@@ -7,21 +7,35 @@ class FormLogin extends Component {
     state = {
         email: '',
         password: '',
-        error: ''
+        error: '',
+        loading: false
     };
 
     onSubmitLogin() {
         console.log('onSubmitLogin', this.state);
         const { email, password } = this.state;
 
+        this.setState({ error: '', loading: true });
+
         firebase.auth().signInWithEmailAndPassword(email, password)
             .catch(() => {
                 firebase.auth().createUserWithEmailAndPassword(email, password)
                     .catch(() => {
-                        this.setState({ error: 'Authentication Failed.' });
+                        this.setState({ error: 'Authentication Failed.', loading: false });
                     });
             });
     }
+
+    renderButton() {
+        if (this.state.loading) {
+            return <Spinner size='small' />
+        };
+        return (
+            <Button handleOnPress={this.onSubmitLogin.bind(this)}>
+                Login
+            </Button>
+        );
+    };
 
     render() {
         return (
@@ -50,9 +64,7 @@ class FormLogin extends Component {
                 </Text>
 
                 <CardSection>
-                    <Button handleOnPress={this.onSubmitLogin.bind(this)}>
-                        Login
-                    </Button>
+                    {this.renderButton()}
                 </CardSection>
             </Card>
         );
