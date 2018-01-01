@@ -7,6 +7,8 @@ import FormLogin from './components/LoginForm';
 import firebase from 'firebase'
 class App extends Component {
 
+    state = { onLoggedIn: false };
+
     componentWillMount() {
         firebase.initializeApp({
             apiKey: "AIzaSyBXpPjDs7UNp2ydi2vAr9VHmbtepq1Xs-c",
@@ -16,6 +18,18 @@ class App extends Component {
             storageBucket: "",
             messagingSenderId: "1033782716030"
         });
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+                this.setState({
+                    onLoggedIn: true
+                })
+            } else {
+                this.setState({
+                    onLoggedIn: false
+                })
+            }
+        })
     }
 
     render() {
